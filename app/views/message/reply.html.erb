@@ -1,6 +1,17 @@
+<script type="text/javascript">
+  function validateForm()
+  {
+    var x=document.forms["reply_message"]["content"].value;
+    if (x==null || x=="")
+    {
+      alert("Reply must be filled out");
+      return false;
+    }
+  }
+</script>
 <div id="reply">
   <center>
-    <%=form_tag reply_message_reply_path(@message.id) do%>
+    <%=  form_tag reply_message_reply_path(@message.id), :name => "reply_message", :onsubmit => "return validateForm()" do %>
       <p style="font-size: 25px;"><b>Message Sender </b> :
         <% if current_user.id == @message.user_id %>
           <%= "You ( #{current_user.username} )" %>
@@ -83,7 +94,7 @@
           </tr>
         </table>
       <%end%>
-        <hr width="50%" /> <br />
+      <hr width="50%" /> <br />
       <%=  text_area_tag 'content' %><br /><br />
       <%=  submit_tag 'Submit', :class => "button-primary" %>
     <%end%>
