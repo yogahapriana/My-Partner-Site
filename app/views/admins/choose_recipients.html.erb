@@ -22,6 +22,17 @@
 
     function validateForm()
     {
+      var checked = false;
+      jQuery('.checkbox_user').each(function(){
+        if(this.checked == true){
+          checked = true;
+        }
+      });
+      if(checked == false){
+        alert("You must select at least 1 recipient");
+        return false;
+      }
+
       var message_subject=document.forms["new_message"]["message_subject"].value;
       if (message_subject==null || message_subject=="")
       {
@@ -35,7 +46,6 @@
         alert("Message text must be filled out");
         return false;
       }
-
     }
   </script>
   <!-- Script by hscripts.com -->
@@ -55,7 +65,7 @@
       <%#- unless partner.email.eql?(current_user.email) %>
                 <% count += 1 %>
                 <% name = partner.username.to_s + " ( " + partner.email + " )" %>
-                <%= check_box_tag "message[recipients_attributes][#{index}][user_id]", partner.id %> <%= name %>
+                <%= check_box_tag "message[recipients_attributes][#{index}][user_id]", partner.id, false, :class => "checkbox_user" %> <%= name %>
                 <% if partner.email.eql?(current_user.email) %>
                   <%= "You" %>
                 <% end  %>
@@ -86,7 +96,7 @@
     <% else %>
       <form style="font-size: 20px">
         <center />
-        <%= "You don't have any recipient" %><br />
+        <%= "#{@group.name} don't have any member" %><br />
         <%= link_to "Go back to home", root_path %>
         <%= ", and sure that your selected group have minimum 1 member" %>
       </form>
