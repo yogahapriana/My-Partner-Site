@@ -36,12 +36,17 @@
             <%end %>
           </td>
         </tr>
+
         <tr>
           <th>Attachment</th>
           <th>:</th>
           <td>
-            <% @attachment.each do |attachment| %>
-              <%= link_to attachment.attached_file_file_name, download_attachment_path(attachment), :method => :post %>
+            <% if @attachment.count==0 %>
+              <%= "No attachment found" %>
+            <%else%>
+              <% @attachment.each do |attachment| %>
+                <%= link_to attachment.attached_file_file_name, download_attachment_path(attachment), :method => :post %>
+              <% end %>
             <% end %>
           </td>
         </tr>
